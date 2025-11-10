@@ -151,10 +151,11 @@ install_ai_cli_tools_menu() {
     echo -e "  ${CYAN}4${NC}) Qwen CLI"
     echo -e "  ${CYAN}5${NC}) GitHub Copilot CLI"
     echo -e "  ${CYAN}6${NC}) GitHub CLI"
-    echo -e "  ${CYAN}7${NC}) Tümünü Kur"
-    echo -e "  ${CYAN}8${NC}) Ana menüye dön"
+    echo -e "  ${CYAN}7${NC}) Qoder CLI"
+    echo -e "  ${CYAN}8${NC}) Tümünü Kur"
+    echo -e "  ${CYAN}9${NC}) Ana menüye dön"
 
-    echo -ne "\n${YELLOW}Seçiminizi yapın (1-8): ${NC}"
+    echo -ne "\n${YELLOW}Seçiminizi yapın (1-9): ${NC}"
     read -r choice
 
     case $choice in
@@ -164,20 +165,41 @@ install_ai_cli_tools_menu() {
         4) install_qwen_cli ;;
         5) install_copilot_cli ;;
         6) install_github_cli ;;
-        7)
+        7) install_qoder_cli ;;
+        8)
             install_claude_code
             install_gemini_cli
             install_opencode_cli
             install_qwen_cli
             install_copilot_cli
             install_github_cli
+            install_qoder_cli
             ;;
-        8) return ;;
+        9) return ;;
         *) echo -e "${RED}[HATA]${NC} Geçersiz seçim!" ;;
     esac
 }
 
+# Install Qoder CLI
+install_qoder_cli() {
+    echo -e "\n${BLUE}╔═══════════════════════════════════════════════╗${NC}"
+    echo -e "${YELLOW}[BİLGİ]${NC} Qoder CLI kurulumu başlatılıyor..."
+    echo -e "${BLUE}╚═══════════════════════════════════════════════╝${NC}"
+
+    echo -e "${YELLOW}[BİLGİ]${NC} Qoder CLI indiriliyor ve kuruluyor..."
+    curl -fsSL https://qoder.com/install | bash
+
+    reload_shell_configs
+
+    if command -v qoder &> /dev/null; then
+        echo -e "${GREEN}[BAŞARILI]${NC} Qoder CLI kurulumu tamamlandı!"
+    else
+        echo -e "${RED}[HATA]${NC} Qoder CLI kurulumu başarısız!"
+        return 1
+    fi
+}
 # Export functions for use in other modules
+export -f install_qoder_cli
 export -f install_claude_code
 export -f install_gemini_cli
 export -f install_opencode_cli

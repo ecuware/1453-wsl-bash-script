@@ -113,7 +113,7 @@ The project has been refactored from a 2,331-line monolithic script into a clean
 3. **Python Ecosystem** (`modules/python.sh`) - Python, pip, pipx, UV with PEP 668 compliance
 4. **JavaScript Ecosystem** (`modules/javascript.sh`) - NVM and Bun.js installation
 5. **PHP Ecosystem** (`modules/php.sh`) - Multiple PHP versions (7.4-8.5) with Laravel support
-6. **AI CLI Tools** (`modules/ai-cli.sh`) - Claude Code, Gemini, Qwen, OpenCode, Copilot, GitHub CLI
+6. **AI CLI Tools** (`modules/ai-cli.sh`) - Claude Code, Gemini, Qwen, OpenCode, Copilot, GitHub CLI, Qoder CLI
 7. **AI Frameworks** (`modules/ai-frameworks.sh`) - SuperGemini, SuperQwen, SuperClaude
 8. **Interactive Menus** (`modules/menus.sh`) - Menu-driven interface with multi-choice support
 
@@ -328,6 +328,7 @@ docker run -it ubuntu:latest /bin/bash
 
 ### AI CLI Tools
 - Claude Code CLI
+- Qoder CLI
 - Gemini CLI (Google AI SDK)
 - Qwen CLI
 - OpenCode CLI
