@@ -1,25 +1,25 @@
 #!/bin/bash
 
-# 1453.AI WSL Setup Script Installer
-# This script downloads and sets up the modular WSL setup script
+# 1453.AI WSL Kurulum Betiği Yükleyici
+# Bu betik modüler WSL kurulum betiğini indirir ve kurar
 
 set -e
 
-# Colors for output
+# Renkli çıktı için tanımlamalar
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 CYAN='\033[0;36m'
-NC='\033[0m' # No Color
+NC='\033[0m' # Renk Yok
 
-# GitHub repository information
+# GitHub depo bilgileri
 REPO_OWNER="altudev"
 REPO_NAME="1453-wsl-bash-script"
 BRANCH="master"
 BASE_URL="https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}"
 
-# Installation directory
+# Kurulum dizini
 INSTALL_DIR="$HOME/.1453-wsl-setup"
 
 # ASCII Art Banner
@@ -36,67 +36,67 @@ show_banner() {
     echo -e "${NC}"
     echo ""
     echo -e "${BLUE}╔════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${BLUE}║         1453.AI WSL Setup Script - Quick Installer            ║${NC}"
+    echo -e "${BLUE}║      1453.AI WSL Kurulum Betiği - Hızlı Yükleyici            ║${NC}"
     echo -e "${BLUE}╚════════════════════════════════════════════════════════════════╝${NC}\n"
 }
 
-# Function to download a file
+# Dosya indirme fonksiyonu
 download_file() {
     local url="$1"
     local dest="$2"
     local desc="$3"
 
-    echo -e "${YELLOW}[DOWNLOADING]${NC} $desc"
+    echo -e "${YELLOW}[İNDİRİLİYOR]${NC} $desc"
     if curl -fsSL "$url" -o "$dest" 2>/dev/null; then
         echo -e "${GREEN}[✓]${NC} $desc"
         return 0
     else
-        echo -e "${RED}[✗]${NC} Failed to download: $desc"
+        echo -e "${RED}[✗]${NC} İndirilemedi: $desc"
         return 1
     fi
 }
 
-# Main installation function
+# Ana kurulum fonksiyonu
 main() {
     clear
     show_banner
 
-    echo -e "${CYAN}[INFO]${NC} Starting 1453.AI WSL Setup Script Installation..."
-    echo -e "${CYAN}[INFO]${NC} Installation directory: ${INSTALL_DIR}"
+    echo -e "${CYAN}[BİLGİ]${NC} 1453.AI WSL Kurulum Betiği Yüklemesi Başlatılıyor..."
+    echo -e "${CYAN}[BİLGİ]${NC} Kurulum dizini: ${INSTALL_DIR}"
     echo ""
 
-    # Check for curl
+    # curl kontrolü
     if ! command -v curl &> /dev/null; then
-        echo -e "${RED}[ERROR]${NC} curl is required but not installed."
-        echo -e "${YELLOW}[TIP]${NC} Install curl with: sudo apt install curl"
+        echo -e "${RED}[HATA]${NC} curl gerekli ama kurulu değil."
+        echo -e "${YELLOW}[İPUCU]${NC} curl'ü kurmak için: sudo apt install curl"
         exit 1
     fi
 
-    # Create installation directory structure
-    echo -e "${YELLOW}[SETUP]${NC} Creating directory structure..."
+    # Kurulum dizin yapısını oluştur
+    echo -e "${YELLOW}[KURULUM]${NC} Dizin yapısı oluşturuluyor..."
     mkdir -p "${INSTALL_DIR}/src"/{lib,config,modules}
-    echo -e "${GREEN}[✓]${NC} Directory structure created"
+    echo -e "${GREEN}[✓]${NC} Dizin yapısı oluşturuldu"
     echo ""
 
-    # List of files to download with their paths
+    # İndirilecek dosyaların listesi
     declare -a files=(
-        "src/linux-ai-setup-script.sh:Main script"
-        "src/lib/init.sh:Initialization module"
-        "src/lib/common.sh:Common utilities"
-        "src/lib/package-manager.sh:Package manager detection"
-        "src/config/colors.sh:Color definitions"
-        "src/config/php-versions.sh:PHP configuration"
-        "src/config/banner.sh:Banner display"
-        "src/modules/python.sh:Python ecosystem"
-        "src/modules/javascript.sh:JavaScript ecosystem"
-        "src/modules/php.sh:PHP ecosystem"
-        "src/modules/ai-cli.sh:AI CLI tools"
-        "src/modules/ai-frameworks.sh:AI frameworks"
-        "src/modules/menus.sh:Menu system"
+        "src/linux-ai-setup-script.sh:Ana betik"
+        "src/lib/init.sh:Başlatma modülü"
+        "src/lib/common.sh:Ortak araçlar"
+        "src/lib/package-manager.sh:Paket yöneticisi tespiti"
+        "src/config/colors.sh:Renk tanımlamaları"
+        "src/config/php-versions.sh:PHP yapılandırması"
+        "src/config/banner.sh:Banner gösterimi"
+        "src/modules/python.sh:Python ekosistemi"
+        "src/modules/javascript.sh:JavaScript ekosistemi"
+        "src/modules/php.sh:PHP ekosistemi"
+        "src/modules/ai-cli.sh:AI CLI araçları"
+        "src/modules/ai-frameworks.sh:AI framework'leri"
+        "src/modules/menus.sh:Menü sistemi"
     )
 
-    # Download all files
-    echo -e "${CYAN}[INFO]${NC} Downloading modular components..."
+    # Tüm dosyaları indir
+    echo -e "${CYAN}[BİLGİ]${NC} Modüler bileşenler indiriliyor..."
     echo ""
 
     local failed=0
@@ -113,62 +113,70 @@ main() {
     echo ""
 
     if [ $failed -gt 0 ]; then
-        echo -e "${RED}[ERROR]${NC} Failed to download $failed file(s)."
-        echo -e "${YELLOW}[TIP]${NC} You can try again or clone the repository directly:"
+        echo -e "${RED}[HATA]${NC} $failed dosya indirilemedi."
+        echo -e "${YELLOW}[İPUCU]${NC} Tekrar deneyebilir veya depoyu doğrudan klonlayabilirsiniz:"
         echo -e "      git clone https://github.com/${REPO_OWNER}/${REPO_NAME}.git"
         exit 1
     fi
 
-    # Make the main script executable
+    # Ana betiği çalıştırılabilir yap
     chmod +x "${INSTALL_DIR}/src/linux-ai-setup-script.sh"
 
-    # Create a convenient launcher script
-    echo -e "${YELLOW}[SETUP]${NC} Creating launcher script..."
+    # Kullanışlı bir başlatıcı betiği oluştur
+    echo -e "${YELLOW}[KURULUM]${NC} Başlatıcı betiği oluşturuluyor..."
     cat > "${INSTALL_DIR}/1453-setup" << 'LAUNCHER'
 #!/bin/bash
-# 1453.AI WSL Setup Launcher
+# 1453.AI WSL Kurulum Başlatıcı
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 exec bash "${SCRIPT_DIR}/src/linux-ai-setup-script.sh" "$@"
 LAUNCHER
 
     chmod +x "${INSTALL_DIR}/1453-setup"
-    echo -e "${GREEN}[✓]${NC} Launcher script created"
+    echo -e "${GREEN}[✓]${NC} Başlatıcı betiği oluşturuldu"
     echo ""
 
-    # Add to PATH (optional)
-    echo -e "${CYAN}[INFO]${NC} Installation completed successfully!"
+    # Kurulum başarılı mesajı
+    echo -e "${CYAN}[BİLGİ]${NC} Kurulum başarıyla tamamlandı!"
     echo ""
     echo -e "${GREEN}═══════════════════════════════════════════════════════════════${NC}"
-    echo -e "${GREEN}                    Installation Complete!                     ${NC}"
+    echo -e "${GREEN}                    Kurulum Tamamlandı!                        ${NC}"
     echo -e "${GREEN}═══════════════════════════════════════════════════════════════${NC}"
     echo ""
-    echo -e "${YELLOW}To run the setup script, use one of these methods:${NC}"
+    echo -e "${YELLOW}Kurulum betiğini çalıştırmak için şu yöntemlerden birini kullanın:${NC}"
     echo ""
-    echo -e "  1. Direct execution:"
+    echo -e "  1. Doğrudan çalıştırma:"
     echo -e "     ${GREEN}${INSTALL_DIR}/1453-setup${NC}"
     echo ""
-    echo -e "  2. Add to PATH (optional) for easy access:"
+    echo -e "  2. PATH'e ekleyerek kolay erişim (isteğe bağlı):"
     echo -e "     ${GREEN}echo 'export PATH=\"${INSTALL_DIR}:\$PATH\"' >> ~/.bashrc${NC}"
     echo -e "     ${GREEN}source ~/.bashrc${NC}"
     echo -e "     ${GREEN}1453-setup${NC}"
     echo ""
-    echo -e "  3. Create an alias (optional):"
+    echo -e "  3. Takma ad (alias) oluşturma (isteğe bağlı):"
     echo -e "     ${GREEN}echo 'alias 1453=\"${INSTALL_DIR}/1453-setup\"' >> ~/.bashrc${NC}"
     echo -e "     ${GREEN}source ~/.bashrc${NC}"
     echo -e "     ${GREEN}1453${NC}"
     echo ""
-    echo -e "${CYAN}[TIP]${NC} The script is installed in: ${INSTALL_DIR}"
-    echo -e "${CYAN}[TIP]${NC} To update, simply run this installer again"
+    echo -e "${CYAN}[İPUCU]${NC} Betik şu dizinde kurulu: ${INSTALL_DIR}"
+    echo -e "${CYAN}[İPUCU]${NC} Güncellemek için bu yükleyiciyi tekrar çalıştırın"
     echo ""
 
-    # Ask if user wants to run the setup now
-    echo -ne "${YELLOW}Do you want to run the setup script now? (y/N): ${NC}"
+    # Kullanıcıya kurulum betiğini şimdi çalıştırmak isteyip istemediğini sor
+    echo -e "${YELLOW}════════════════════════════════════════════════════════════════${NC}"
+    echo -ne "${YELLOW}Kurulum betiğini şimdi çalıştırmak ister misiniz? (e/E=Evet, Enter=Hayır): ${NC}"
     read -r response
-    if [[ "$response" =~ ^[Yy]$ ]]; then
+
+    if [[ "$response" =~ ^[eE]$ ]]; then
         echo ""
+        echo -e "${GREEN}[BİLGİ]${NC} Kurulum betiği başlatılıyor..."
         exec "${INSTALL_DIR}/1453-setup"
+    else
+        echo ""
+        echo -e "${CYAN}[BİLGİ]${NC} Kurulum betiğini daha sonra çalıştırabilirsiniz:"
+        echo -e "${GREEN}${INSTALL_DIR}/1453-setup${NC}"
+        echo ""
     fi
 }
 
-# Run the installer
+# Yükleyiciyi çalıştır
 main "$@"

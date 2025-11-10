@@ -6,63 +6,63 @@ Comprehensive automated setup script for WSL (Windows Subsystem for Linux) envir
 
 ## 📥 Installation
 
-### 🎯 Quick Install (One Command - Recommended!)
+### 🎯 Hızlı Kurulum (Tek Komut - Önerilen!)
 
-Run this single command in your WSL terminal to download and install everything:
+WSL terminalinizde bu tek komutu çalıştırarak her şeyi indirip kurabilirsiniz:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/altudev/1453-wsl-bash-script/master/install.sh | bash
 ```
 
-Or with wget:
+Veya wget ile:
 ```bash
 wget -qO- https://raw.githubusercontent.com/altudev/1453-wsl-bash-script/master/install.sh | bash
 ```
 
-This will:
-- Download all script components
-- Set up everything in `~/.1453-wsl-setup`
-- Create a launcher for easy access
-- Optionally run the setup immediately
+Bu komut:
+- Tüm betik bileşenlerini indirir
+- Her şeyi `~/.1453-wsl-setup` dizinine kurar
+- Kolay erişim için başlatıcı oluşturur
+- İsterseniz kurulumu hemen başlatır
 
-After installation, run:
+Kurulumdan sonra çalıştırmak için:
 ```bash
 ~/.1453-wsl-setup/1453-setup
 ```
 
-### Alternative: Clone Repository
+### Alternatif: Depoyu Klonlama
 ```bash
-# Clone the repository
+# Depoyu klonla
 git clone https://github.com/altudev/1453-wsl-bash-script.git
 cd 1453-wsl-bash-script
 
-# Run the setup script
+# Kurulum betiğini çalıştır
 chmod +x src/linux-ai-setup-script.sh
 ./src/linux-ai-setup-script.sh
 ```
 
-### ⚠️ Windows Line Endings Issue
+### ⚠️ Windows Satır Sonu Sorunu
 
-If you download the script from Windows or encounter this error:
+Eğer betiği Windows'tan indirdiyseniz veya bu hatayı alıyorsanız:
 ```
 linux-ai-setup-script.sh: line 10: syntax error near unexpected token `elif'
 ```
 
-**Solution 1: Use the fix-crlf helper script**
+**Çözüm 1: fix-crlf yardımcı betiğini kullanın**
 ```bash
 chmod +x fix-crlf.sh
 ./fix-crlf.sh src/linux-ai-setup-script.sh
 ```
 
-**Solution 2: Manual fix**
+**Çözüm 2: Manuel düzeltme**
 ```bash
-# Convert Windows line endings to Unix
+# Windows satır sonlarını Unix'e dönüştür
 sed -i 's/\r$//' src/linux-ai-setup-script.sh
 
-# Or use dos2unix if available
+# Veya dos2unix varsa kullanın
 dos2unix src/linux-ai-setup-script.sh
 
-# Then run the script
+# Sonra betiği çalıştırın
 bash src/linux-ai-setup-script.sh
 ```
 
