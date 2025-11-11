@@ -45,154 +45,110 @@ EOF
     return 0
 }
 
-# Ask experience level
-ask_experience_level() {
+# Show preset selection
+show_presets() {
     echo -e "\n${BLUE}╔════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${BLUE}║                 DENEYİM SEVİYENİZİ SEÇİN                   ║${NC}"
+    echo -e "${BLUE}║                    KURULUM PAKETLERİ                        ║${NC}"
     echo -e "${BLUE}╚════════════════════════════════════════════════════════════════╝${NC}"
     echo ""
-    echo -e "${CYAN}Hangi seviyedesiniz?${NC}"
+    echo -e "${CYAN}Ne yapmak istiyorsun? Hangi paketi istiyorsun: ${NC}"
     echo ""
-    echo -e "  ${GREEN}1${NC}) ${YELLOW}Yeni Başlıyorum${NC}"
-    echo -e "     ${CYAN}→ Sadece temel araçları kur (Python, Git)${NC}"
+    echo -e "  ${GREEN}1${NC}) 🌐 ${YELLOW}WEB DEVELOPMENT${NC}"
+    echo -e "     ${CYAN}Python + Node.js + PHP + Composer${NC}"
+    echo -e "     ${CYAN}Web siteleri, API'ler, full-stack uygulamalar için${NC}"
     echo ""
-    echo -e "  ${GREEN}2${NC}) ${YELLOW}Orta Seviye${NC}"
-    echo -e "     ${CYAN}→ İhtiyacım olan araçları biliyorum${NC}"
+    echo -e "  ${GREEN}2${NC}) 🤖 ${YELLOW}AI DEVELOPMENT${NC}"
+    echo -e "     ${CYAN}Python + AI CLI Tools + AI Frameworks${NC}"
+    echo -e "     ${CYAN}Makine öğrenmesi, AI modelleri, veri analizi${NC}"
     echo ""
-    echo -e "  ${GREEN}3${NC}) ${YELLOW}Deneyimliyim${NC}"
-    echo -e "     ${CYAN}→ Her şeyi kur, en kapsamlı ortamı istiyorum${NC}"
+    echo -e "  ${GREEN}3${NC}) ⚙️  ${YELLOW}BACKEND DEVELOPMENT${NC}"
+    echo -e "     ${CYAN}Python + Go + PHP + Composer${NC}"
+    echo -e "     ${CYAN}API'ler, mikroservisler, sunucu tarafı${NC}"
     echo ""
-    echo -ne "${YELLOW}Seçiminiz (1-3): ${NC}"
-    read -r experience
+    echo -e "  ${GREEN}4${NC}) 🚀 ${YELLOW}EVERYTHING${NC}"
+    echo -e "     ${CYAN}Her şeyi kur, full-stack + AI + Backend${NC}"
+    echo -e "     ${CYAN}Her türlü geliştirme için komple ortam${NC}"
+    echo ""
+    echo -e "  ${GREEN}5${NC}) 📱 ${YELLOW}MOBILE + WEB${NC}"
+    echo -e "     ${CYAN}Python + Node.js + PHP + Flutter araçları${NC}"
+    echo -e "     ${CYAN}Mobil + web uygulamaları${NC}"
+    echo ""
+    echo -e "${CYAN}────────────────────────────────────────────────────────────${NC}"
+    echo ""
+    echo -ne "${YELLOW}Seç (1-5) → Enter'a bas, kurulsun: ${NC}"
+    read -r preset
 
-    case $experience in
-        1) echo "beginner";;
-        2) echo "intermediate";;
-        3) echo "advanced";;
-        *) ask_experience_level;;
-    esac
-}
-
-# Ask what they want to build
-ask_development_focus() {
-    echo -e "\n${BLUE}╔════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${BLUE}║                   NE YAPMAK İSTİYORSUNUZ?                   ║${NC}"
-    echo -e "${BLUE}╚════════════════════════════════════════════════════════════════╝${NC}"
-    echo ""
-    echo -e "${CYAN}Hangi alanda geliştirme yapmak istiyorsunuz?${NC}"
-    echo ""
-    echo -e "  ${GREEN}1${NC}) ${YELLOW}Web Siteleri${NC}"
-    echo -e "     ${CYAN}→ Frontend & Backend web uygulamaları${NC}"
-    echo ""
-    echo -e "  ${GREEN}2${NC}) ${YELLOW}AI & Yapay Zeka${NC}"
-    echo -e "     ${CYAN}→ Makine öğrenmesi, AI modelleri${NC}"
-    echo ""
-    echo -e "  ${GREEN}3${NC}) ${YELLOW}API & Backend${NC}"
-    echo -e "     ${CYAN}→ Sunucu tarafı, mikroservisler${NC}"
-    echo ""
-    echo -e "  ${GREEN}4${NC}) ${YELLOW}Mobil Uygulamalar${NC}"
-    echo -e "     ${CYAN}→ iOS & Android uygulamaları${NC}"
-    echo ""
-    echo -e "  ${GREEN}5${NC}) ${YELLOW}Henüz Karar Vermedim${NC}"
-    echo -e "     ${CYAN}→ Her şeyi kur, sonra seçerim${NC}"
-    echo ""
-    echo -ne "${YELLOW}Seçiminiz (1-5): ${NC}"
-    read -r focus
-
-    case $focus in
+    case $preset in
         1) echo "web";;
         2) echo "ai";;
         3) echo "backend";;
-        4) echo "mobile";;
-        5) echo "general";;
-        *) ask_development_focus;;
+        4) echo "everything";;
+        5) echo "mobile";;
+        *)
+            echo -e "\n${RED}[HATA]${NC} 1-5 arası seç, toy! 😄"
+            sleep 1
+            show_presets
+            ;;
     esac
 }
 
-# Ask about customization
-ask_customization() {
-    echo -e "\n${BLUE}╔════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${BLUE}║                   KURULUM TERCİHİNİZ                        ║${NC}"
-    echo -e "${BLUE}╚════════════════════════════════════════════════════════════════╝${NC}"
-    echo ""
-    echo -e "${CYAN}Hangi kurulum yöntemini tercih edersiniz?${NC}"
-    echo ""
-    echo -e "  ${GREEN}1${NC}) ${YELLOW}Önerilenleri Kur${NC}"
-    echo -e "     ${CYAN}→ Size uygun araçları otomatik seçip kurarım${NC}"
-    echo -e "     ${CYAN}→ (Hızlı, önerilen, güvenli)${NC}"
-    echo ""
-    echo -e "  ${GREEN}2${NC}) ${YELLOW}Kendim Seçmek İstiyorum${NC}"
-    echo -e "     ${CYAN}→ Detaylı listeyi göster, ben seçim yapayım${NC}"
-    echo -e "     ${CYAN}→ (İleri düzey kullanıcılar için)${NC}"
-    echo ""
-    echo -ne "${YELLOW}Seçiminiz (1-2): ${NC}"
-    read -r custom
-
-    case $custom in
-        1) echo "auto";;
-        2) echo "manual";;
-        *) ask_customization;;
-    esac
-}
-
-# Generate installation plan based on answers
+# Generate installation plan based on preset
 generate_installation_plan() {
-    local experience=$1
-    local focus=$2
-    local customization=$3
+    local preset=$1
 
     echo -e "\n${CYAN}╔════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${CYAN}║                  KURULUM PLANINIZ HAZIR!                    ║${NC}"
+    echo -e "${CYAN}║                  KURULUM BAŞLIYOR! 🚀                       ║${NC}"
     echo -e "${CYAN}╚════════════════════════════════════════════════════════════════╝${NC}"
     echo ""
 
     # Always install base tools
-    echo -e "${YELLOW}📦 Temel araçlar (herkese uygun):${NC}"
-    echo -e "  ✓ Git yapılandırması"
+    echo -e "${YELLOW}📦 İlk önce:${NC}"
     echo -e "  ✓ Sistem güncellemeleri"
+    echo -e "  ✓ Git yapılandırması"
+    echo -e "  ✓ Python + pip + pipx + UV"
     echo ""
 
-    # Build tool list based on experience and focus
+    # Build tool list based on preset
     local tools=()
 
-    case $experience in
-        "beginner")
-            echo -e "${YELLOW}🌱 Başlangıç kurulumu:${NC}"
-            tools+=("python" "pip" "git_config")
-            ;;
-        "intermediate"|"advanced")
-            echo -e "${YELLOW}⚙️  Gelişmiş kurulum:${NC}"
-            tools+=("python" "pip" "pipx" "uv" "git_config")
-            ;;
-    esac
-
-    case $focus in
+    case $preset in
         "web")
-            echo -e "${YELLOW}🌐 Web geliştirme için:${NC}"
+            echo -e "${YELLOW}🌐 Web Development paketi:${NC}"
+            echo -e "  ✓ Node.js (NVM)"
+            echo -e "  ✓ Bun.js runtime"
+            echo -e "  ✓ PHP + Composer"
             tools+=("nvm" "node" "bun" "php" "composer")
             ;;
         "ai")
-            echo -e "${YELLOW}🤖 AI geliştirme için:${NC}"
+            echo -e "${YELLOW}🤖 AI Development paketi:${NC}"
+            echo -e "  ✓ Node.js (AI araçları için)"
+            echo -e "  ✓ AI CLI Tools (Claude, Gemini, etc.)"
+            echo -e "  ✓ AI Frameworks (SuperClaude, etc.)"
             tools+=("nvm" "node" "ai_cli" "ai_frameworks")
             ;;
         "backend")
-            echo -e "${YELLOW}⚙️  Backend geliştirme için:${NC}"
+            echo -e "${YELLOW}⚙️  Backend Development paketi:${NC}"
+            echo -e "  ✓ Go language"
+            echo -e "  ✓ PHP + Composer"
             tools+=("go" "php" "composer")
             ;;
+        "everything")
+            echo -e "${YELLOW}🚀 EVERYTHING paketi:${NC}"
+            echo -e "  ✓ Node.js + Bun.js"
+            echo -e "  ✓ Go language"
+            echo -e "  ✓ PHP + Composer"
+            echo -e "  ✓ AI CLI Tools + Frameworks"
+            echo -e "  ✓ GitHub CLI"
+            tools+=("nvm" "node" "bun" "go" "php" "composer" "ai_cli" "ai_frameworks" "github_cli")
+            ;;
         "mobile")
-            echo -e "${YELLOW}📱 Mobil geliştirme için:${NC}"
+            echo -e "${YELLOW}📱 Mobile + Web paketi:${NC}"
+            echo -e "  ✓ Node.js"
+            echo -e "  ✓ PHP + Composer"
+            echo -e "  ✓ Flutter araçları"
             tools+=("nvm" "node" "php" "composer")
             ;;
-        "general")
-            echo -e "${YELLOW}🎯 Genel geliştirme için:${NC}"
-            tools+=("nvm" "node" "bun" "php" "composer" "go" "ai_cli")
-            ;;
     esac
-
-    if [ "$experience" = "advanced" ]; then
-        echo -e "${YELLOW}🚀 Full-stack kurulum:${NC}"
-        tools+=("ai_frameworks")
-    fi
 
     echo ""
     echo -e "${CYAN}────────────────────────────────────────────────────────────${NC}"
@@ -286,36 +242,19 @@ run_quickstart_mode() {
         return 1
     fi
 
-    # Ask questions
-    local experience=$(ask_experience_level)
-    local focus=$(ask_development_focus)
-    local customization=$(ask_customization)
+    # Show preset selection
+    local preset=$(show_presets)
 
-    echo -e "\n${CYAN}⌛ Kurulum planı hazırlanıyor...${NC}"
+    echo -e "\n${CYAN}⚡ Bir saniye, başlıyorum...${NC}"
     sleep 1
 
     # Generate and show plan
-    local -a tools=($(generate_installation_plan "$experience" "$focus" "$customization"))
+    local -a tools=($(generate_installation_plan "$preset"))
 
-    if [ "$customization" = "manual" ]; then
-        echo -e "\n${YELLOW}Detaylı kurulum için Advanced Mode'a geçiliyor...${NC}"
-        sleep 2
-        return 1
-    fi
-
-    # Confirm before installing
-    echo -e "\n${YELLOW}Bu planla devam etmek istiyor musunuz? (Enter=Evet, n=Hayır): ${NC}"
-    read -r confirm
-
-    if [[ "$confirm" =~ ^[nN]$ ]]; then
-        echo -e "\n${CYAN}ℹ️  ${NC}Kurulum iptal edildi."
-        return 1
-    fi
-
-    # Execute installation
+    # Execute installation immediately
     execute_installation_plan "${tools[@]}"
 
-    echo -e "\n${YELLOW}Başka bir işlem yapmak ister misiniz? (y/N): ${NC}"
+    echo -e "\n${YELLOW}Başka bir şey kurmak ister misin? (y/N): ${NC}"
     read -r more
     if [[ ! "$more" =~ ^[yY]$ ]]; then
         exit 0
@@ -326,9 +265,7 @@ run_quickstart_mode() {
 
 # Export functions
 export -f show_quickstart_welcome
-export -f ask_experience_level
-export -f ask_development_focus
-export -f ask_customization
+export -f show_presets
 export -f generate_installation_plan
 export -f execute_installation_plan
 export -f run_quickstart_mode
