@@ -47,6 +47,7 @@ show_menu() {
     echo -e "  ${GREEN}12${NC}) AI Framework'leri"
     echo -e "  ${GREEN}13${NC}) AI Framework'leri Kaldır"
     echo -e "  ${GREEN}14${NC}) Go Kurulumu"
+    echo -e "  ${GREEN}15${NC}) AI Profilleri Yönetimi"
     echo -e "  ${GREEN}0${NC}) Çıkış"
     echo -e "${CYAN}════════════════════════════════════════════════════════════════${NC}"
 }
@@ -167,6 +168,7 @@ run_advanced_mode() {
                 12) install_ai_frameworks_menu ;;
                 13) remove_ai_frameworks_menu ;;
                 14) install_go_menu ;;
+                15) manage_profiles_menu ;;
                 0)
                     echo -e "\n${GREEN}[BİLGİ]${NC} Ana menüye dönülüyor..."
                     sleep 1
@@ -191,8 +193,69 @@ run_advanced_mode() {
     done
 }
 
+# Help mesajı göster
+show_help() {
+    echo -e "${CYAN}╔════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${CYAN}║        1453.AI WSL Setup Script - Kullanım Kılavuzu           ║${NC}"
+    echo -e "${CYAN}╚════════════════════════════════════════════════════════════════╝${NC}"
+    echo ""
+    echo -e "${GREEN}Hızlı Profil Komutları:${NC}"
+    echo -e "  ${YELLOW}$0 claude${NC}          Claude Developer profili kur"
+    echo -e "  ${YELLOW}$0 gemini${NC}          Gemini Developer profili kur"
+    echo -e "  ${YELLOW}$0 qwen${NC}            Qwen Developer profili kur"
+    echo -e "  ${YELLOW}$0 multi${NC}           Multi-AI Developer profili kur (Önerilen)"
+    echo -e "  ${YELLOW}$0 code${NC}            AI Code Assistant profili kur"
+    echo -e "  ${YELLOW}$0 researcher${NC}      AI Researcher profili kur"
+    echo -e "  ${YELLOW}$0 backend${NC}         AI Backend Developer profili kur"
+    echo -e "  ${YELLOW}$0 frontend${NC}        AI Frontend Developer profili kur"
+    echo ""
+    echo -e "${GREEN}Kullanılabilir Profiller:${NC}"
+    echo -e "  • ${CYAN}claude${NC}      - Claude Code CLI + SuperClaude + Python"
+    echo -e "  • ${CYAN}gemini${NC}      - Gemini CLI + SuperGemini + Python"
+    echo -e "  • ${CYAN}qwen${NC}        - Qwen CLI + SuperQwen + Python"
+    echo -e "  • ${CYAN}multi${NC}       - Tüm AI Tools + Frameworks (En kapsamlı)"
+    echo -e "  • ${CYAN}code${NC}        - Claude + Copilot + Qoder (Kod üretimi)"
+    echo -e "  • ${CYAN}researcher${NC}   - Tüm AI Frameworks (Araştırma)"
+    echo -e "  • ${CYAN}backend${NC}     - Python + Go + AI Tools (Backend)"
+    echo -e "  • ${CYAN}frontend${NC}    - Node.js + AI Tools (Frontend)"
+    echo ""
+    echo -e "${GREEN}Normal Mod:${NC}"
+    echo -e "  ${YELLOW}$0${NC}                    İnteraktif menüyü aç"
+    echo -e "  ${YELLOW}$0 --help${NC} veya ${YELLOW}$0 -h${NC}    Bu yardım mesajını göster"
+    echo ""
+    echo -e "${CYAN}Örnekler:${NC}"
+    echo -e "  ${GREEN}$0 multi${NC}              # Multi-AI profili direkt kur"
+    echo -e "  ${GREEN}$0 claude${NC}             # Claude profili direkt kur"
+    echo -e "  ${GREEN}$0${NC}                    # İnteraktif menü"
+    echo ""
+}
+
 # Main program loop - entry point
 main() {
+    # Komut satırı argümanlarını kontrol et
+    if [ $# -gt 0 ]; then
+        case "$1" in
+            --help|-h|help)
+                show_help
+                exit 0
+                ;;
+            claude|gemini|qwen|multi|code|researcher|backend|frontend|claude-dev|gemini-dev|qwen-dev|multi-ai|ai-code|ai-researcher|ai-backend|ai-frontend)
+                # Hızlı profil komutları - direkt kurulum yap
+                clear
+                show_banner
+                install_profile_by_name "$1"
+                exit 0
+                ;;
+            *)
+                echo -e "${RED}[HATA]${NC} Bilinmeyen komut: $1"
+                echo ""
+                show_help
+                exit 1
+                ;;
+        esac
+    fi
+    
+    # Normal menü akışı (argüman yoksa)
     show_mode_selection
 }
 

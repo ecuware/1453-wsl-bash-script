@@ -73,9 +73,13 @@ show_presets() {
     echo -e "     ${CYAN}Python + Node.js + PHP + Flutter araçları${NC}"
     echo -e "     ${CYAN}Mobil + web uygulamaları${NC}"
     echo ""
+    echo -e "  ${GREEN}6${NC}) 🤖 ${YELLOW}AI PROFİLLERİ${NC}"
+    echo -e "     ${CYAN}AI odaklı geliştirme profilleri${NC}"
+    echo -e "     ${CYAN}Claude, Gemini, Qwen veya Multi-AI${NC}"
+    echo ""
     echo -e "${CYAN}────────────────────────────────────────────────────────────${NC}"
     echo ""
-    echo -ne "${YELLOW}Seç (1-5) → Enter'a bas, kurulsun: ${NC}"
+    echo -ne "${YELLOW}Seç (1-6) → Enter'a bas, kurulsun: ${NC}"
     read -r preset
 
     case $preset in
@@ -84,8 +88,9 @@ show_presets() {
         3) echo "backend";;
         4) echo "everything";;
         5) echo "mobile";;
+        6) echo "ai_profiles";;
         *)
-            echo -e "\n${RED}[HATA]${NC} 1-5 arası seç, toy! 😄"
+            echo -e "\n${RED}[HATA]${NC} 1-6 arası seç, toy! 😄"
             sleep 1
             show_presets
             ;;
@@ -244,6 +249,12 @@ run_quickstart_mode() {
 
     # Show preset selection
     local preset=$(show_presets)
+
+    # If AI profiles selected, show profile menu
+    if [ "$preset" = "ai_profiles" ]; then
+        manage_profiles_menu
+        return 0
+    fi
 
     echo -e "\n${CYAN}⚡ Bir saniye, başlıyorum...${NC}"
     sleep 1
