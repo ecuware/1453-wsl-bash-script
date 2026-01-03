@@ -22,11 +22,9 @@ source "${SCRIPT_DIR}/config/php-versions.sh"
 source "${SCRIPT_DIR}/config/banner.sh"
 
 # Phase 3: Load core libraries
-# shellcheck source=lib/common.sh
-source "${SCRIPT_DIR}/lib/common.sh"
-
-# shellcheck source=lib/package-manager.sh
-source "${SCRIPT_DIR}/lib/package-manager.sh"
+# shellcheck source=lib/core.sh
+source "${SCRIPT_DIR}/lib/core.sh"
+init_performance_tracking
 
 # Phase 4: Load feature modules
 # shellcheck source=modules/python.sh

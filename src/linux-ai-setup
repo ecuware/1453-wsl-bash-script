@@ -28,6 +28,10 @@ source "${SCRIPT_DIR}/lib/common.sh"
 # shellcheck source=lib/package-manager.sh
 source "${SCRIPT_DIR}/lib/package-manager.sh"
 
+# shellcheck source=lib/core.sh
+source "${SCRIPT_DIR}/lib/core.sh"
+init_performance_tracking
+
 # Phase 4: Load feature modules
 # shellcheck source=modules/python.sh
 source "${SCRIPT_DIR}/modules/python.sh"
@@ -49,6 +53,9 @@ source "${SCRIPT_DIR}/modules/go.sh"
 
 # shellcheck source=modules/profiles.sh
 source "${SCRIPT_DIR}/modules/profiles.sh"
+
+# shellcheck source=modules/quickstart.sh
+source "${SCRIPT_DIR}/modules/quickstart.sh"
 
 # shellcheck source=modules/menus.sh
 source "${SCRIPT_DIR}/modules/menus.sh"

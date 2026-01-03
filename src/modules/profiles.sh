@@ -509,6 +509,7 @@ install_profile_by_name() {
 }
 
 # Export functions for use in other modules
+export -f configure_api_key
 export -f configure_anthropic_api_key
 export -f configure_google_ai_api_key
 export -f configure_qwen_api_key
@@ -524,4 +525,3 @@ export -f install_ai_frontend_developer_profile
 export -f show_ai_profiles
 export -f manage_profiles_menu
 export -f install_profile_by_name
-

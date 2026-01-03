@@ -84,6 +84,7 @@ main() {
         "src/lib/init.sh:Başlatma modülü"
         "src/lib/common.sh:Ortak araçlar"
         "src/lib/package-manager.sh:Paket yöneticisi tespiti"
+        "src/lib/core.sh:Performans ve optimizasyon kütüphanesi"
         "src/config/colors.sh:Renk tanımlamaları"
         "src/config/php-versions.sh:PHP yapılandırması"
         "src/config/banner.sh:Banner gösterimi"
