@@ -7,70 +7,47 @@
 PROFILES_DIR="$HOME/.1453-wsl-setup/profiles"
 mkdir -p "$PROFILES_DIR"
 
-# API Key yapılandırma fonksiyonları
-configure_anthropic_api_key() {
-    echo -e "\n${YELLOW}[BİLGİ]${NC} Anthropic API Key yapılandırması"
+# Genel API Key yapılandırma fonksiyonu
+# Kullanım: configure_api_key "Servis Adı" "ORTAM_DEGISKENI" "https://console.url.com" (opsiyonel)
+configure_api_key() {
+    local service_name="$1"
+    local env_var_name="$2"
+    local console_url="${3:-}"  # Opsiyonel URL
+    
+    echo -e "\n${YELLOW}[BİLGİ]${NC} ${service_name} API Key yapılandırması"
     echo -ne "${CYAN}API Key'iniz var mı? (e/E=Evet, Enter=Hayır): ${NC}"
     read -r has_key
     
     if [[ "$has_key" =~ ^[eE]$ ]]; then
-        echo -ne "${YELLOW}Anthropic API Key'inizi girin: ${NC}"
+        echo -ne "${YELLOW}${service_name} API Key'inizi girin: ${NC}"
         read -r api_key
         if [ -n "$api_key" ]; then
             echo "" >> "$HOME/.bashrc"
-            echo "# Anthropic API Key" >> "$HOME/.bashrc"
-            echo "export ANTHROPIC_API_KEY='$api_key'" >> "$HOME/.bashrc"
-            [ -f "$HOME/.zshrc" ] && echo "export ANTHROPIC_API_KEY='$api_key'" >> "$HOME/.zshrc"
+            echo "# ${service_name} API Key" >> "$HOME/.bashrc"
+            echo "export ${env_var_name}='$api_key'" >> "$HOME/.bashrc"
+            [ -f "$HOME/.zshrc" ] && echo "export ${env_var_name}='$api_key'" >> "$HOME/.zshrc"
             echo -e "${GREEN}[BAŞARILI]${NC} API Key kaydedildi!"
         fi
     else
         echo -e "${CYAN}[BİLGİ]${NC} API Key'i daha sonra ayarlayabilirsiniz:"
-        echo -e "  ${GREEN}export ANTHROPIC_API_KEY='your-key'${NC}"
-        echo -e "  ${GREEN}https://console.anthropic.com/${NC}"
+        echo -e "  ${GREEN}export ${env_var_name}='your-key'${NC}"
+        if [ -n "$console_url" ]; then
+            echo -e "  ${GREEN}${console_url}${NC}"
+        fi
     fi
+}
+
+# API Key yapılandırma fonksiyonları (genel fonksiyonu kullanarak)
+configure_anthropic_api_key() {
+    configure_api_key "Anthropic" "ANTHROPIC_API_KEY" "https://console.anthropic.com/"
 }
 
 configure_google_ai_api_key() {
-    echo -e "\n${YELLOW}[BİLGİ]${NC} Google AI API Key yapılandırması"
-    echo -ne "${CYAN}API Key'iniz var mı? (e/E=Evet, Enter=Hayır): ${NC}"
-    read -r has_key
-    
-    if [[ "$has_key" =~ ^[eE]$ ]]; then
-        echo -ne "${YELLOW}Google AI API Key'inizi girin: ${NC}"
-        read -r api_key
-        if [ -n "$api_key" ]; then
-            echo "" >> "$HOME/.bashrc"
-            echo "# Google AI API Key" >> "$HOME/.bashrc"
-            echo "export GOOGLE_AI_API_KEY='$api_key'" >> "$HOME/.bashrc"
-            [ -f "$HOME/.zshrc" ] && echo "export GOOGLE_AI_API_KEY='$api_key'" >> "$HOME/.zshrc"
-            echo -e "${GREEN}[BAŞARILI]${NC} API Key kaydedildi!"
-        fi
-    else
-        echo -e "${CYAN}[BİLGİ]${NC} API Key'i daha sonra ayarlayabilirsiniz:"
-        echo -e "  ${GREEN}export GOOGLE_AI_API_KEY='your-key'${NC}"
-        echo -e "  ${GREEN}https://makersuite.google.com/app/apikey${NC}"
-    fi
+    configure_api_key "Google AI" "GOOGLE_AI_API_KEY" "https://makersuite.google.com/app/apikey"
 }
 
 configure_qwen_api_key() {
-    echo -e "\n${YELLOW}[BİLGİ]${NC} Qwen API Key yapılandırması"
-    echo -ne "${CYAN}API Key'iniz var mı? (e/E=Evet, Enter=Hayır): ${NC}"
-    read -r has_key
-    
-    if [[ "$has_key" =~ ^[eE]$ ]]; then
-        echo -ne "${YELLOW}Qwen API Key'inizi girin: ${NC}"
-        read -r api_key
-        if [ -n "$api_key" ]; then
-            echo "" >> "$HOME/.bashrc"
-            echo "# Qwen API Key" >> "$HOME/.bashrc"
-            echo "export QWEN_API_KEY='$api_key'" >> "$HOME/.bashrc"
-            [ -f "$HOME/.zshrc" ] && echo "export QWEN_API_KEY='$api_key'" >> "$HOME/.zshrc"
-            echo -e "${GREEN}[BAŞARILI]${NC} API Key kaydedildi!"
-        fi
-    else
-        echo -e "${CYAN}[BİLGİ]${NC} API Key'i daha sonra ayarlayabilirsiniz:"
-        echo -e "  ${GREEN}export QWEN_API_KEY='your-key'${NC}"
-    fi
+    configure_api_key "Qwen" "QWEN_API_KEY"
 }
 
 configure_all_api_keys() {
@@ -448,55 +425,31 @@ manage_profiles_menu() {
         echo -ne "\n${YELLOW}Profil seçin (0-8): ${NC}"
         read -r choice
         
+        # Hangi kurulum fonksiyonunun çağrılacağını belirle
+        local install_function=""
         case $choice in
-            1)
-                install_claude_developer_profile
-                echo -e "\n${YELLOW}Devam etmek için Enter'a basın...${NC}"
-                read -r
-                ;;
-            2)
-                install_gemini_developer_profile
-                echo -e "\n${YELLOW}Devam etmek için Enter'a basın...${NC}"
-                read -r
-                ;;
-            3)
-                install_qwen_developer_profile
-                echo -e "\n${YELLOW}Devam etmek için Enter'a basın...${NC}"
-                read -r
-                ;;
-            4)
-                install_multi_ai_developer_profile
-                echo -e "\n${YELLOW}Devam etmek için Enter'a basın...${NC}"
-                read -r
-                ;;
-            5)
-                install_ai_code_assistant_profile
-                echo -e "\n${YELLOW}Devam etmek için Enter'a basın...${NC}"
-                read -r
-                ;;
-            6)
-                install_ai_researcher_profile
-                echo -e "\n${YELLOW}Devam etmek için Enter'a basın...${NC}"
-                read -r
-                ;;
-            7)
-                install_ai_backend_developer_profile
-                echo -e "\n${YELLOW}Devam etmek için Enter'a basın...${NC}"
-                read -r
-                ;;
-            8)
-                install_ai_frontend_developer_profile
-                echo -e "\n${YELLOW}Devam etmek için Enter'a basın...${NC}"
-                read -r
-                ;;
-            0)
-                return
-                ;;
+            1) install_function="install_claude_developer_profile" ;;
+            2) install_function="install_gemini_developer_profile" ;;
+            3) install_function="install_qwen_developer_profile" ;;
+            4) install_function="install_multi_ai_developer_profile" ;;
+            5) install_function="install_ai_code_assistant_profile" ;;
+            6) install_function="install_ai_researcher_profile" ;;
+            7) install_function="install_ai_backend_developer_profile" ;;
+            8) install_function="install_ai_frontend_developer_profile" ;;
+            0) return ;;
             *)
                 echo -e "${RED}[HATA]${NC} Geçersiz seçim! Lütfen 0-8 arasında bir değer girin."
                 sleep 2
+                continue
                 ;;
         esac
+        
+        # Seçilen fonksiyonu çağır ve yürütmeyi duraklat
+        if [ -n "$install_function" ]; then
+            $install_function
+            echo -e "\n${YELLOW}Devam etmek için Enter'a basın...${NC}"
+            read -r
+        fi
     done
 }
 
@@ -507,32 +460,32 @@ install_profile_by_name() {
     # Paket yöneticisini tespit et
     detect_package_manager
     
-    # Profil ismini normalize et (küçük harfe çevir, tire/alt çizgiyi kaldır)
+    # Profil ismini normalize et (küçük harfe çevir, tireleri alt çizgiye çevir, boşlukları alt çizgiye çevir)
     profile_name=$(echo "$profile_name" | tr '[:upper:]' '[:lower:]' | tr '-' '_' | tr ' ' '_')
     
     case "$profile_name" in
-        claude|claude_developer|claude-dev)
+        claude|claude_developer|claude_dev)
             install_claude_developer_profile
             ;;
-        gemini|gemini_developer|gemini-dev)
+        gemini|gemini_developer|gemini_dev)
             install_gemini_developer_profile
             ;;
-        qwen|qwen_developer|qwen-dev)
+        qwen|qwen_developer|qwen_dev)
             install_qwen_developer_profile
             ;;
-        multi|multi_ai|multi-ai|multi_ai_developer|multi-ai-developer|multi_ai_dev|multi-ai-dev)
+        multi|multi_ai|multi_ai_developer|multi_ai_dev)
             install_multi_ai_developer_profile
             ;;
-        code|code_assistant|code-assistant|ai_code|ai-code|ai_code_assistant|ai-code-assistant)
+        code|code_assistant|ai_code|ai_code_assistant)
             install_ai_code_assistant_profile
             ;;
-        researcher|ai_researcher|ai-researcher|research)
+        researcher|ai_researcher|research)
             install_ai_researcher_profile
             ;;
-        backend|ai_backend|ai-backend|backend_dev|backend-dev|ai_backend_developer|ai-backend-developer)
+        backend|ai_backend|backend_dev|ai_backend_developer)
             install_ai_backend_developer_profile
             ;;
-        frontend|ai_frontend|ai-frontend|frontend_dev|frontend-dev|ai_frontend_developer|ai-frontend-developer)
+        frontend|ai_frontend|frontend_dev|ai_frontend_developer)
             install_ai_frontend_developer_profile
             ;;
         *)

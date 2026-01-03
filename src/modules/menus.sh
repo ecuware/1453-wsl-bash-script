@@ -234,25 +234,20 @@ show_help() {
 main() {
     # Komut satırı argümanlarını kontrol et
     if [ $# -gt 0 ]; then
+        # Help komutları
         case "$1" in
             --help|-h|help)
                 show_help
                 exit 0
                 ;;
-            claude|gemini|qwen|multi|code|researcher|backend|frontend|claude-dev|gemini-dev|qwen-dev|multi-ai|ai-code|ai-researcher|ai-backend|ai-frontend)
-                # Hızlı profil komutları - direkt kurulum yap
-                clear
-                show_banner
-                install_profile_by_name "$1"
-                exit 0
-                ;;
-            *)
-                echo -e "${RED}[HATA]${NC} Bilinmeyen komut: $1"
-                echo ""
-                show_help
-                exit 1
-                ;;
         esac
+        
+        # Diğer tüm argümanlar profil komutları olarak kabul edilir
+        # install_profile_by_name normalizasyon yapar, doğrulama yapar ve hata kontrolü yapar
+        clear
+        show_banner
+        install_profile_by_name "$1"
+        exit $?
     fi
     
     # Normal menü akışı (argüman yoksa)
